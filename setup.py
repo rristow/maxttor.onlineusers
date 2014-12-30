@@ -18,7 +18,7 @@ setup(name='maxttor.onlineusers',
       url='https://github.com/rristow/maxttor.onlineusers',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=['ityou'],
+      namespace_packages=['maxttor'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
