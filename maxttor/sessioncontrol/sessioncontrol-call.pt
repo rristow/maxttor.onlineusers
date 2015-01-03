@@ -1,0 +1,60 @@
+<!-- maxttor session control -->
+<tal:sessioncontrol 
+    define="onlineConfig view/getConfig;
+            portal_url  context/@@plone_portal_state/portal_url;
+            session_ping_interval onlineConfig/session_ping_interval|python:60"
+    condition="view/isActive">
+    <script type="text/javascript"
+            tal:content="string:
+
+        debugmsg = function (log_txt) {
+            if (typeof window.console != 'undefined') {
+                window.console.log(log_txt);
+            }
+        }
+
+        jq(document).ready(
+            function () {
+                var session_ping_interval =  parseInt(${session_ping_interval})*1000;
+                var ajax_sessionscontrol = '${portal_url}/@@sessionscontrol_online';
+                
+                // send an online signal 
+                function sessionscontrol_online () {
+                    // ---- session is online -----------
+                    jq.ajax({
+                        url: ajax_sessionscontrol,
+                        type: 'POST',
+                        dataType: 'json',     
+                        timeout: 5000,
+                        error: function(){
+                            debugmsg('ERROR: sessionscontrol_online view is not accessible');
+                        },
+                        success: function(sessionscontrol_resp){
+                            if (typeof sessionscontrol_resp == 'object') {
+                                if (sessionscontrol_resp.enabled) {
+                                    // Change interval on the fly
+                                    session_ping_interval = sessionscontrol_resp.session_ping_interval*1000;
+                                    debugmsg('Called sessionscontrol_online.');
+                                    for (var id in sessionscontrol_resp) {
+                                        debugmsg('  '+id+'='+String(sessionscontrol_resp[id]));
+                                    }
+                                    setTimeout(sessionscontrol_online, session_ping_interval);
+                                } else {
+                                    debugmsg('sessionscontrol_online DISABLED!');
+                                }
+                           } else {
+                                debugmsg('sessionscontrol_online DISABLED - unespected response from server');
+                           }
+                        }
+                    });
+                }
+
+                // Start the session online call
+                sessionscontrol_online();
+                // session control call (timer)
+                debugmsg('starting session control. Interval:'+String(session_ping_interval));
+            }
+        );
+">
+     </script>
+</tal:sessioncontrol>

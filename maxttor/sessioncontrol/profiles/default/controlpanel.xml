@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<object
+    name="portal_controlpanel"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="maxttor.sessioncontrol"
+    purge="False">
+
+    <configlet
+        title="Online Session Control"
+        action_id="onlinesessioncontrol"
+        appId="maxttor.sessioncontrol"
+        category="Products"
+        condition_expr=""
+        url_expr="string:${portal_url}/@@sessionscontrol-settings"
+        visible="True"
+        icon_expr="string:${portal_url}/++resource++maxttor.sessioncontrol.resources/sessionscontrol-icon.gif"
+        i18n:attributes="title">
+        <permission>Manage portal</permission>
+    </configlet>
+
+</object>
+

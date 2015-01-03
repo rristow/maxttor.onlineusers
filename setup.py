@@ -3,7 +3,7 @@ import os
 
 version = '1.1rc6'
 
-setup(name='maxttor.onlineusers',
+setup(name='maxttor.sessioncontrol',
       version=version,
       description="Plone Product - Control the number of sessions for each user",
       long_description=open("README.txt").read() + "\n" +
@@ -15,7 +15,7 @@ setup(name='maxttor.onlineusers',
       keywords='Plone sessions control online',
       author='Rodrigo Ristow',
       author_email='rodrigo@maxttor.com',
-      url='https://github.com/rristow/maxttor.onlineusers',
+      url='https://github.com/rristow/maxttor.sessioncontrol',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['maxttor'],
@@ -24,6 +24,7 @@ setup(name='maxttor.onlineusers',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'pas.plugins.preauth==1.0',
       ],
       entry_points="""
       # -*- Entry points: -*-

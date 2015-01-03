@@ -1,0 +1,6 @@
+<layers>
+  <layer
+    name="maxttor.sessionscontrol"
+    interface="maxttor.sessioncontrol.interfaces.ISessionsControl"
+    />
+</layers>

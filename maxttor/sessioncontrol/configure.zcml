@@ -1,0 +1,67 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="maxttor.sessioncontrol">
+
+  <five:registerPackage package="." initialize=".initialize" />
+  <include package="Products.CMFCore" file="permissions.zcml" />
+  <i18n:registerTranslations directory="locales" />
+   
+  <genericsetup:registerProfile
+      name="default"
+      title="Online sessions control"
+      directory="profiles/default"
+      description="Installs the maxttor.sessioncontrol package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <browser:resourceDirectory
+      name="maxttor.sessioncontrol.resources"
+      directory="resources"
+      />
+
+  <browser:page
+      name="sessionscontrol-settings"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.sessionscontrolSettingsControlPanel"
+      permission="cmf.ManagePortal"
+      layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+      />
+
+  <browser:page
+        name="sessioncontrol"
+        for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+        class=".views.OnlineTrackingView"
+        permission="cmf.ListPortalMembers"
+        />
+        
+  <browser:page
+        for="*"
+        name="sessionscontrol_online"
+        class=".ajax.AjaxSessionsControlOnline"
+        permission="zope.Public"
+        layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+        />
+
+  <browser:page
+        for="*"
+        name="sessionscontrol_offline"
+        class=".ajax.AjaxSessionsControlOffline"
+        permission="zope.Public"
+        layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+        />
+
+  <browser:viewlet
+        name="sessionscontrol-call"
+        manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+        template="sessioncontrol-call.pt"
+        class=".views.AjaxSessionsControlCall"
+        layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+        permission="zope.Public"
+        />
+
+
+</configure>

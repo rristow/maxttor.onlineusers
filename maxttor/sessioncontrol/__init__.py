@@ -1,6 +1,7 @@
 import logging
+
 from zope.i18nmessageid import MessageFactory
-_ = MessageFactory('maxttor.onlineusers')
+_ = MessageFactory('maxttor.sessioncontrol')
 
 def initialize(context):
     """Initializer called when used as a Zope 2 product."""
