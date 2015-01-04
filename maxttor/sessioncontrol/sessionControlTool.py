@@ -69,7 +69,7 @@ class sessionControlTool(object):
     def get_sessions_active(self, user_id):
         """ Return all active sessions for this user """
         user = db.getSessionUser(user_id)
-        if sessions:
+        if user:
             return [s for s in user.sessions if s.isActive()]
         else:
             return []
