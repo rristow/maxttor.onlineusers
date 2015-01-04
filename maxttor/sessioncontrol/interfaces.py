@@ -21,6 +21,20 @@ class ISessionsControlSettings(Interface):
             default=True,
         )
 
+    restrictSessions = schema.Bool(
+            title=_(u"restrict sessions"),
+            description=_(u"restrict the number of sessions (max sessions) per user at login"),
+            required=True,
+            default=True,
+        )
+
+    session_maximun = schema.Int(
+            title=_(u"Max. sessions"),
+            description=_(u"The maximum number of sessions allowed"),
+            required=True,
+            default=3,
+        )
+
     session_timeout = schema.Int(
             title=_(u"Session timeout"),
             description=_(u"For how long should a user be marked as online? (Seconds) "),
