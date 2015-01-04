@@ -17,24 +17,9 @@ from plone.memoize.instance import memoize
 
 from maxttor.sessioncontrol import _
 from maxttor.sessioncontrol.sessionControlTool import sessionTool
+from maxttor.sessioncontrol.utils import JsonDump
 
 logger = logging.getLogger('maxttor.sessioncontorl')
-
-class sessionscontrolUtils():
-    """small utils"""
-
-    def jsonResponse(self, context, data):
-        """ Returns Json Data in Callback function
-        """
-        request = context.REQUEST
-        callback = request.get('callback','')        
-        request.response.setHeader("Content-type","application/json")
-        if callback:
-            cb = callback + "(%s);"
-            return cb % json.dumps(data)
-        else:
-            return json.dumps(data)
-
 
 class AjaxSessionsControlOnline(BrowserView):
     """ AJAX Trigger for sessions
@@ -45,7 +30,7 @@ class AjaxSessionsControlOnline(BrowserView):
         """
         try:
             toolcfg = sessionTool.getConfig()
-            wu = sessionscontrolUtils() 
+            wu = JsonDump() 
             if toolcfg.enabled:            
                 context = aq_inner(self.context)
                 session = sessionTool.addUserSession(context=context, request=self.request)
@@ -75,7 +60,7 @@ class AjaxSessionsControlOffline(BrowserView):
         try:
             context = aq_inner(self.context)
             sessionTool.deleteUserSession(context=context)
-            wu = sessionscontrolUtils() 
+            wu = JsonDump() 
             return wu.jsonResponse(context, {'result': 'ok'} )
         except (ConflictError, KeyboardInterrupt):
             raise

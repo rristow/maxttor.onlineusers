@@ -30,7 +30,7 @@
                             debugmsg('ERROR: sessionscontrol_online view is not accessible');
                         },
                         success: function(sessionscontrol_resp){
-                            if (typeof sessionscontrol_resp == 'object') {
+                            if (sessionscontrol_resp != null) {
                                 if (sessionscontrol_resp.enabled) {
                                     // Change interval on the fly
                                     session_ping_interval = sessionscontrol_resp.session_ping_interval*1000;
@@ -43,7 +43,7 @@
                                     debugmsg('sessionscontrol_online DISABLED!');
                                 }
                            } else {
-                                debugmsg('sessionscontrol_online DISABLED - unespected response from server');
+                                debugmsg('sessionscontrol_online DISABLED - unexpected response from server');
                            }
                         }
                     });

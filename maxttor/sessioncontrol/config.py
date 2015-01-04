@@ -19,3 +19,4 @@ WHO_IS_ONLINE_LISTING = '@@who-am-i'
 
 # Database is a list in memmory.
 DATA = []
+COOKIE_NAME = 'maxttor_sc'

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import uuid
 from Products.CMFCore.utils import getToolByName 
 from zope.component import getUtility
 from Acquisition import aq_inner
@@ -6,10 +7,11 @@ from zope.app.component.hooks import getSite
 from datetime import datetime, timedelta, date
 from plone.registry.interfaces import IRegistry
 from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
-
 from maxttor.sessioncontrol.dbapi import db
-
+from maxttor.sessioncontrol.utils import getCookie, setCookie
 import logging
+
+logger = logging.getLogger('maxttor.sessioncontorl')
 
 #TODO
 maxSessions = 3
@@ -39,12 +41,21 @@ class sessionControlTool(object):
 
         if member.getId():
             sdm = context.session_data_manager
-            session = sdm.getSessionData(create=True)
-            session_id = sdm.getBrowserIdManager().getBrowserId(create=False)
-            if session_id:
-                session_ip = request.get('HTTP_X_FORWARDED_FOR') or request.get('REMOTE_ADDR',None)
-                session = db.AddUserSession(member, maxSessions, session_id, session_ip)
-                return session
+            # DB conflicts using sessions
+            #session = sdm.getSessionData(create=True)
+            #session_id = sdm.getBrowserIdManager().getBrowserId(create=False)
+
+            session_id = getCookie(request)
+            if not session_id:
+                # Generate a uuid to represent the session
+                session_id = uuid.uuid4().hex
+                setCookie(request, session_id)
+
+            session_ip = request.get('HTTP_X_FORWARDED_FOR') or request.get('REMOTE_ADDR',None)
+            session = db.AddUserSession(member, maxSessions, session_id, session_ip)
+            
+            return session
+
 
     def deleteUserSession(self, context=None, user_id=''):
         """ Remove the user from the sessioncontrol"""

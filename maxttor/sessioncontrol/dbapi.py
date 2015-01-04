@@ -10,6 +10,7 @@ from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST
 from plone.registry.interfaces import IRegistry
 from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
 
+logger = logging.getLogger('maxttor.sessioncontorl')
 
 class UserSession(object):
     session_id      = u""
@@ -93,13 +94,13 @@ class DBApi(object):
                 session.timestamp_login = timestamp
                 user.sessions.append(session)
                 if DEBUG:
-                    logging.warning("session created for %s: %s"%(user_id, session.session_id))
+                    logger.warning("session created for %s: %s"%(user_id, session.session_id))
 
             session.timestamp = timestamp
             session.ip = session_ip
             return session
         else:
-            logging.error("Ignoring user (UserId is None)")
+            logger.error("Ignoring user (UserId is None)")
 
     def deleteUserSession(self, user_id):
         """ Remove the user """
