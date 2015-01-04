@@ -45,10 +45,10 @@ class AjaxSessionsControlOnline(BrowserView):
         """
         try:
             toolcfg = sessionTool.getConfig()
+            wu = sessionscontrolUtils() 
             if toolcfg.enabled:            
                 context = aq_inner(self.context)
                 session = sessionTool.addUserSession(context=context, request=self.request)
-                wu = sessionscontrolUtils() 
                 if session:
                     #logger.warning("AjaxSessionsControlOnline finished (session: %s)"%session.session_id)
                     return wu.jsonResponse(context, {'result': 'ok', 'session_id' : session.session_id, 'enabled': toolcfg.enabled, 'session_ping_interval': toolcfg.session_ping_interval, } )
