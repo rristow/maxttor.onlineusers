@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
+from zope.interface import implements
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from maxttor.sessioncontrol.sessionControlTool import sessionTool
 from plone.app.layout.viewlets import ViewletBase
@@ -8,16 +9,27 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
 from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST
+from zope.viewlet.interfaces import IViewlet
 
-class AjaxSessionsControlCall(ViewletBase):
-    """
-    A viewlet that add the javascript code to keep the user online (json api).
-    """
-    render = ViewPageTemplateFile('sessioncontrol-call.pt')
+
+class AjaxSessionsControlCall_(BrowserView):
+    implements(IViewlet)
+    render = ViewPageTemplateFile('tracking.pt')
+
+    def __init__(self, context, request, view, manager):
+        super(AnalyticsTrackingViewlet, self).__init__(context, request)
+        self.__parent__ = view
+        self.context = context
+        self.request = request
+        self.view = view
+        self.manager = manager
 
     def getConfig(self):
         return sessionTool.getConfig()
 
+    def update(self):
+        pass
+       
     def isActive(self):
         context = aq_inner(self.context)
         return sessionTool.isActive(context)
