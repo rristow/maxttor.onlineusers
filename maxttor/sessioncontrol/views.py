@@ -16,7 +16,7 @@ class AjaxSessionsControlCall(BrowserView):
     render = ViewPageTemplateFile('sessioncontrol-call.pt')
 
     def __init__(self, context, request, view, manager):
-        super(AnalyticsTrackingViewlet, self).__init__(context, request)
+        super(AjaxSessionsControlCall, self).__init__(context, request)
         self.__parent__ = view
         self.context = context
         self.request = request
