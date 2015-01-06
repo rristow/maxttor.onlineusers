@@ -1,5 +1,5 @@
-<!-- maxttor session control -->
-<tal:sessioncontrol 
+<!-- maxttor.sessioncontrol -->
+<tal:tracking 
     define="onlineConfig view/getConfig;
             portal_url  context/@@plone_portal_state/portal_url;
             session_ping_interval onlineConfig/session_ping_interval|python:60"
@@ -57,4 +57,4 @@
         );
 ">
      </script>
-</tal:sessioncontrol>
+</tal:tracking>

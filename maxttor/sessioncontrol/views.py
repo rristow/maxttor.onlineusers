@@ -14,7 +14,7 @@ from zope.viewlet.interfaces import IViewlet
 
 class AjaxSessionsControlCall_(BrowserView):
     implements(IViewlet)
-    render = ViewPageTemplateFile('tracking.pt')
+    render = ViewPageTemplateFile('sessioncontrol-call.pt')
 
     def __init__(self, context, request, view, manager):
         super(AnalyticsTrackingViewlet, self).__init__(context, request)
