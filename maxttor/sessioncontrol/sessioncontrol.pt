@@ -18,7 +18,7 @@
 
           <dl tal:condition="users">
             <tal:users repeat="user users"> 
-                <dt >
+                <dt>
                    <span class="" 
                         tal:content="user/user_id|string:NO_ID">user_id</span>
                    &nbsp;&nbsp;[<a href=""
@@ -32,8 +32,7 @@
                   
                   <img tal:condition="session/isActive"     title="Online"  alt="Online"  tal:attributes="src string:$portal_url/++resource++maxttor.sessioncontrol.resources/online.png" />
                   <img tal:condition="not:session/isActive" title="Offline" alt="Offline" tal:attributes="src string:$portal_url/++resource++maxttor.sessioncontrol.resources/away.png" />                  
-                  <span tal:content="session/ip">IP</span> - <span tal:content="session/session_id">session_id</span>
-                  (Updated <span tal:content="session/time_lastrefresh">time_lastrefresh</span> ago,
+                  <span style="cursor: pointer" tal:content="session/ip" title="" tal:attributes="title session/session_id">IP</span> (Updated <span tal:content="session/time_lastrefresh">time_lastrefresh</span> ago,
                    online: <span tal:content="session/time_online">time_online</span>)
 
                   &nbsp;&nbsp;[<a href=""
