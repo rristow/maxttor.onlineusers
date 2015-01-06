@@ -46,14 +46,6 @@
         layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
         />
 
-  <browser:page
-        for="*"
-        name="sessionscontrol_offline"
-        class=".ajax.AjaxSessionsControlOffline"
-        permission="zope.Public"
-        layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
-        />
-
   <browser:viewlet
         name="sessionscontrol-call"
         manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
@@ -63,5 +55,8 @@
         permission="zope.Public"
         />
 
+  <subscriber 
+        for="Products.PlonePAS.events.UserLoggedOutEvent"
+        handler="maxttor.sessioncontrol.sessionControlTool.clear_session_on_logout" />
 
 </configure>

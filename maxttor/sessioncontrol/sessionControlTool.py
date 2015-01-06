@@ -16,7 +16,7 @@ logger = logging.getLogger('maxttor.sessioncontorl')
 
 #TODO
 maxSessions = 3
-
+    
 class sessionControlTool(object):
     """ Online Users Tool """
 
@@ -94,3 +94,18 @@ class sessionControlTool(object):
         else:
             return []
 sessionTool = sessionControlTool()
+
+def clear_session_on_logout(event):
+    """
+    Logout event handler.
+    """
+    session_id = "UNDEFINED"
+    try:
+        request = event.object.REQUEST    
+        session_id = getCookie(request)
+        sessionTool.deleteSession(session_id)
+        setCookie(request, "")
+        if DEBUG:
+            logger.warning("Session '%s' deleted on logout"%session_id)
+    except:
+        logger.error("It was not possible to clear the session '%s' on logout"%session_id)
