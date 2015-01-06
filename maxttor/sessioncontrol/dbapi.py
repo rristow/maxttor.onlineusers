@@ -6,10 +6,9 @@ import time
 
 from zope.component import getUtility
 from datetime import datetime, timedelta
-from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST
+from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST, REMOVEINACTIVE_SECONDS
 from plone.registry.interfaces import IRegistry
 from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
-
 logger = logging.getLogger('maxttor.sessioncontorl')
 
 class UserSession(object):
@@ -31,12 +30,17 @@ class UserSession(object):
     def time_lastrefresh(self):
         return self.formattime(self.timestamp)
 
-    def isActive(self):
+    def checkTimeout(self, ptimeout):
+        """ Check if a session is older than ptimeout (seconds) """
         now = datetime.now()
+        timeout =  now  - timedelta(seconds=ptimeout)
+        return self.timestamp < timeout
+
+    def isActive(self):
+        """ Check if a session is older than the configured session timeout  """
         ru =  getUtility(IRegistry)
         session_timeout = ru.forInterface(ISessionsControlSettings).session_timeout
-        timeout =  now  - timedelta(seconds=session_timeout)
-        return self.timestamp > timeout
+        return not self.checkTimeout(session_timeout)
 
 class UserProfile(object):
     """Defines the userprofile
@@ -54,19 +58,27 @@ class DBApi(object):
     """ DB Util
     """
     DATA = []
+    last_deepclean = datetime.now() 
 
     def get_timeout(self):
         ru =  getUtility(IRegistry)
         return ru.forInterface(ISessionsControlSettings).session_timeout
-
-    def removeOldSessions(self):
-        pass
 
     def getSessionUser(self, user_id):
         for user in self.DATA:
             if user.user_id == user_id:
                 return user
         return None
+
+    def deepclean(self):  
+        # clear the old entries
+        now = datetime.now()
+        timeout =  now  - timedelta(seconds=REMOVEINACTIVE_SECONDS)
+        if self.last_deepclean < timeout:
+            #TESTRR
+            logger.warning("deepclean")
+            self.deleteInactiveSessions()
+            self.last_deepclean = now
 
     def AddUserSession(self, member, member_maxSessions, session_id, session_ip):
         """ Add or refresh the user sessions
@@ -89,6 +101,9 @@ class DBApi(object):
                     break
 
             if not session:
+                # This is a good moment to remove alte sessions
+                self.deepclean()
+
                 session = UserSession()
                 session.session_id = session_id
                 session.timestamp_login = timestamp
@@ -110,13 +125,30 @@ class DBApi(object):
                 return user
         return None
 
+    def _deleteSessions(self, session_id=None, inactiveTimeout=None):
+        """ Remove the sessions with 'session_id' 
+            and/or if it is inactive for 'inactiveTimeout' seconds """
+        for user in self.DATA[:]:
+            for session in user.sessions[:]:
+                if session_id and session_id == session.session_id:
+                    user.sessions.remove(session)
+                    if inactiveTimeout == None:
+                        return session
+                
+                if inactiveTimeout != None and not session.isActive() and session.checkTimeout(inactiveTimeout):
+                    #TESTRR
+                    logger.warning("Removed inactive sessions: %s"%session.session_id)
+                    user.sessions.remove(session)
+            if len(user.sessions) <= 0:
+                self.DATA.remove(user)
+
+    def deleteInactiveSessions(self, inactiveTimeout=REMOVEINACTIVE_SECONDS):
+        """ Remove old sessions """
+        return self._deleteSessions(inactiveTimeout=inactiveTimeout)
+
     def deleteSession(self, session_id):
         """ Remove this session """
-        for user in self.DATA:
-            for session in user.sessions:
-                if session.session_id == session_id:
-                    user.sessions.remove(session)
-                    return session
+        return self._deleteSessions(session_id=session_id)
 
 class DBUtils():
     """ Help functions

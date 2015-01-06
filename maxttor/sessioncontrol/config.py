@@ -6,6 +6,10 @@ TIME_STRING     = _(u"%d.%m.%Y at %H:%M:%S")
 
 # min value for ajax time period 
 MIN_session_ping_interval = 4000
+# show inactive int he last 24 hours 
+REMOVEINACTIVE_SECONDS = 86400
+#TESTRR
+REMOVEINACTIVE_SECONDS = 3600
 
 # ---- this users will not be considered
 USER_ID_BLACKLIST = ['admin']

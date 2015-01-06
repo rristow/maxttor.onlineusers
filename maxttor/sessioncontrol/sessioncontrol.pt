@@ -54,6 +54,11 @@
     [<a href="" 
        tal:attributes="href string:$portal_url/@@sessioncontrol"
        i18n:translate="label_refrsh">Refresh</a>]
+    &nbsp;&nbsp;
+    [<a href=""
+       tal:attributes="href string:$portal_url/@@sessioncontrol?action=delete_inactivesessions"
+       i18n:translate="label_remove_inactive">Remove Inactive</a>]
+
     </div>
 
 </body>

@@ -9,6 +9,7 @@ from plone.registry.interfaces import IRegistry
 from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
 from maxttor.sessioncontrol.dbapi import db
 from maxttor.sessioncontrol.utils import getCookie, setCookie
+from maxttor.sessioncontrol.config import DEBUG, REMOVEINACTIVE_SECONDS
 import logging
 
 logger = logging.getLogger('maxttor.sessioncontorl')
@@ -71,8 +72,16 @@ class sessionControlTool(object):
             return db.deleteUserSession(user_id)
 
     def deleteSession(self, session_id):
-        """ REmove the session from sessioncontrol"""
+        """ Remove the session from sessioncontrol"""
         return db.deleteSession(session_id)
+
+    def deleteInactiveSessions(self, inactiveTimeout=REMOVEINACTIVE_SECONDS):
+        """ Remove inactive sessions """
+        return db.deleteInactiveSessions(inactiveTimeout)
+
+    def deepclean(self):
+        """ Remove alte sessions """
+        return db.deepclean()
 
     def get_sessiondata(self):
         return db.DATA

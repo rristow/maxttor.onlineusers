@@ -28,7 +28,7 @@ class AjaxSessionsControlCall(BrowserView):
 
     def update(self):
         pass
-       
+
     def isActive(self):
         context = aq_inner(self.context)
         return sessionTool.isActive(context)
@@ -44,10 +44,15 @@ class OnlineTrackingView(BrowserView):
 
         action = request.get('action')
         user_id = request.get('user_id')
+        
+        # Remove alte sessions
+        sessionTool.deepclean()
 
         if action == "delete_session":
             session_id = request.get('session_id')
             sessionTool.deleteSession(session_id=session_id)
+        elif action == "delete_inactivesessions":
+            sessionTool.deleteInactiveSessions(inactiveTimeout=0)
         elif action == "delete_user":
             user_id = request.get('user_id')
             sessionTool.deleteUserSession(user_id=user_id)
