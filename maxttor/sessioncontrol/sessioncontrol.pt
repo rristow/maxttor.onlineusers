@@ -30,7 +30,8 @@
                 <dd tal:condition="user/sessions|nothing"
                     tal:repeat="session user/orderdSessions">
                   
-                  <span tal:condition="not:session/isActive">&nbsp;&nbsp;#Offline </span>
+                  <img tal:condition="session/isActive"     title="Online"  alt="Online"  tal:attributes="src string:$portal_url/++resource++maxttor.sessioncontrol.resources/online.png" />
+                  <img tal:condition="not:session/isActive" title="Offline" alt="Offline" tal:attributes="src string:$portal_url/++resource++maxttor.sessioncontrol.resources/away.png" />                  
                   <span tal:content="session/ip">IP</span> - <span tal:content="session/session_id">session_id</span>
                   (Updated <span tal:content="session/time_lastrefresh">time_lastrefresh</span> ago,
                    online: <span tal:content="session/time_online">time_online</span>)
