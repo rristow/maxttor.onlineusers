@@ -11,8 +11,7 @@ from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
 from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST
 from zope.viewlet.interfaces import IViewlet
 
-
-class AjaxSessionsControlCall_(BrowserView):
+class AjaxSessionsControlCall(BrowserView):
     implements(IViewlet)
     render = ViewPageTemplateFile('sessioncontrol-call.pt')
 
