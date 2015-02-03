@@ -1,4 +1,4 @@
-maxttor.sessioncontrol
+maxttor.onlineusers
 ===================
 
 Plone product to restrict the number of sessions of an user. 

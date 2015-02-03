@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from plone.app.registry.browser import controlpanel
-from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
-from maxttor.sessioncontrol.interfaces import _
+from maxttor.onlineusers.interfaces import ISessionsControlSettings
+from maxttor.onlineusers.interfaces import _
 
 class sessionscontrolSettingsEditForm(controlpanel.RegistryEditForm):
     schema = ISessionsControlSettings

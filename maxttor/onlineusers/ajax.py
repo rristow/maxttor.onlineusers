@@ -13,9 +13,9 @@ from ZODB.POSException import ConflictError
 from datetime import datetime, timedelta, date
 from operator import itemgetter
 from plone.memoize.instance import memoize
-from maxttor.sessioncontrol import _
-from maxttor.sessioncontrol.sessionControlTool import sessionTool
-from maxttor.sessioncontrol.utils import JsonDump
+from maxttor.onlineusers import _
+from maxttor.onlineusers.sessionControlTool import sessionTool
+from maxttor.onlineusers.utils import JsonDump
 try:
     from zope.component.hooks import getSite
 except ImportError:

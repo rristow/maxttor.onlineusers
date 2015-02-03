@@ -6,9 +6,9 @@ import time
 
 from zope.component import getUtility
 from datetime import datetime, timedelta
-from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST, REMOVEINACTIVE_SECONDS
+from maxttor.onlineusers.config import DEBUG, USER_ID_BLACKLIST, REMOVEINACTIVE_SECONDS
 from plone.registry.interfaces import IRegistry
-from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
+from maxttor.onlineusers.interfaces import ISessionsControlSettings
 logger = logging.getLogger('maxttor.sessioncontorl')
 
 class UserSession(object):

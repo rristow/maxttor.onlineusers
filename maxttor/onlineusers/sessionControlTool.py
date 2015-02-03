@@ -5,10 +5,10 @@ from zope.component import getUtility
 from Acquisition import aq_inner
 from datetime import datetime, timedelta, date
 from plone.registry.interfaces import IRegistry
-from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
-from maxttor.sessioncontrol.dbapi import db
-from maxttor.sessioncontrol.utils import getCookie, setCookie
-from maxttor.sessioncontrol.config import DEBUG, REMOVEINACTIVE_SECONDS
+from maxttor.onlineusers.interfaces import ISessionsControlSettings
+from maxttor.onlineusers.dbapi import db
+from maxttor.onlineusers.utils import getCookie, setCookie
+from maxttor.onlineusers.config import DEBUG, REMOVEINACTIVE_SECONDS
 try:
     from zope.component.hooks import getSite
 except ImportError:
@@ -37,7 +37,7 @@ class sessionControlTool(object):
         return ret            
 
     def addUserSession(self, context, request):
-        """ Add or update the existing user and session in the sessioncontrol"""
+        """ Add or update the existing user and session in the onlineusers"""
     
         context = aq_inner(context)
         mt = getToolByName(context,"portal_membership")
@@ -62,7 +62,7 @@ class sessionControlTool(object):
 
 
     def deleteUserSession(self, context=None, user_id=''):
-        """ Remove the user from the sessioncontrol"""
+        """ Remove the user from the onlineusers"""
         
         if not user_id:
             if context:
@@ -75,7 +75,7 @@ class sessionControlTool(object):
             return db.deleteUserSession(user_id)
 
     def deleteSession(self, session_id):
-        """ Remove the session from sessioncontrol"""
+        """ Remove the session from onlineusers"""
         return db.deleteSession(session_id)
 
     def deleteInactiveSessions(self, inactiveTimeout=REMOVEINACTIVE_SECONDS):

@@ -7,7 +7,7 @@ from zope.interface import Interface
 
 from zope.i18nmessageid import MessageFactory
 
-_ = MessageFactory('maxttor.sessioncontrol')
+_ = MessageFactory('maxttor.onlineusers')
 
 class ISessionsControlSettings(Interface):
     """Global whoisonline settings. This describes records stored in the

@@ -1,6 +1,6 @@
 <layers>
   <layer
     name="maxttor.sessionscontrol"
-    interface="maxttor.sessioncontrol.interfaces.ISessionsControl"
+    interface="maxttor.onlineusers.interfaces.ISessionsControl"
     />
 </layers>

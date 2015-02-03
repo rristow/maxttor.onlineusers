@@ -4,7 +4,7 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser"
-    i18n_domain="maxttor.sessioncontrol">
+    i18n_domain="maxttor.onlineusers">
 
   <five:registerPackage package="." initialize=".initialize" />
   <include package="Products.CMFCore" file="permissions.zcml" />
@@ -12,14 +12,14 @@
    
   <genericsetup:registerProfile
       name="default"
-      title="Online sessions control"
+      title="maxttor online users"
       directory="profiles/default"
-      description="Installs the maxttor.sessioncontrol package"
+      description="Installs the maxttor.onlineusers package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
   <browser:resourceDirectory
-      name="maxttor.sessioncontrol.resources"
+      name="maxttor.onlineusers.resources"
       directory="resources"
       />
 
@@ -28,11 +28,11 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.sessionscontrolSettingsControlPanel"
       permission="cmf.ManagePortal"
-      layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+      layer="maxttor.onlineusers.interfaces.ISessionsControl"
       />
 
   <browser:page
-        name="sessioncontrol"
+        name="onlineusers"
         for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
         class=".views.OnlineTrackingView"
         permission="cmf.ListPortalMembers"
@@ -43,20 +43,20 @@
         name="sessionscontrol_online"
         class=".ajax.AjaxSessionsControlOnline"
         permission="zope.Public"
-        layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+        layer="maxttor.onlineusers.interfaces.ISessionsControl"
         />
 
   <browser:viewlet
         name="sessionscontrol-call"
         manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
-        template="sessioncontrol-call.pt"
+        template="onlineusers-call.pt"
         class=".views.AjaxSessionsControlCall"
-        layer="maxttor.sessioncontrol.interfaces.ISessionsControl"
+        layer="maxttor.onlineusers.interfaces.ISessionsControl"
         permission="zope.Public"
         />
 
   <subscriber 
         for="Products.PlonePAS.events.UserLoggedOutEvent"
-        handler="maxttor.sessioncontrol.sessionControlTool.clear_session_on_logout" />
+        handler="maxttor.onlineusers.sessionControlTool.clear_session_on_logout" />
 
 </configure>

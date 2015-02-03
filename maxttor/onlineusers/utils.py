@@ -3,7 +3,7 @@ import sys
 import json
 import logging
 from urllib import quote, unquote
-from maxttor.sessioncontrol.config import DEBUG, COOKIE_NAME
+from maxttor.onlineusers.config import DEBUG, COOKIE_NAME
 
 logger = logging.getLogger('maxttor.sessioncontorl')    
 

@@ -2,18 +2,18 @@
 from Acquisition import aq_inner
 from zope.interface import implements
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from maxttor.sessioncontrol.sessionControlTool import sessionTool
+from maxttor.onlineusers.sessionControlTool import sessionTool
 from plone.app.layout.viewlets import ViewletBase
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
-from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
-from maxttor.sessioncontrol.config import DEBUG, USER_ID_BLACKLIST
+from maxttor.onlineusers.interfaces import ISessionsControlSettings
+from maxttor.onlineusers.config import DEBUG, USER_ID_BLACKLIST
 from zope.viewlet.interfaces import IViewlet
 
 class AjaxSessionsControlCall(BrowserView):
     implements(IViewlet)
-    render = ViewPageTemplateFile('sessioncontrol-call.pt')
+    render = ViewPageTemplateFile('onlineusers-call.pt')
 
     def __init__(self, context, request, view, manager):
         super(AjaxSessionsControlCall, self).__init__(context, request)
@@ -35,7 +35,7 @@ class AjaxSessionsControlCall(BrowserView):
 
 class OnlineTrackingView(BrowserView):
     """ list & control online users """
-    template = ViewPageTemplateFile('sessioncontrol.pt')
+    template = ViewPageTemplateFile('onlineusers.pt')
 
     def __call__(self):
         context = aq_inner(self.context)        

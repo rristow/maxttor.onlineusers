@@ -23,21 +23,21 @@
                         tal:content="user/user_id|string:NO_ID">user_id</span>
                    &nbsp;&nbsp;[<a href=""
                       tal:define="user_id user/user_id"
-                      tal:attributes="href string:$portal_url/@@sessioncontrol?action=delete_user&user_id=$user_id"
+                      tal:attributes="href string:$portal_url/@@onlineusers?action=delete_user&user_id=$user_id"
                       i18n:translate="label_remove">Remove</a>]
                 </dt>
 
                 <dd tal:condition="user/sessions|nothing"
                     tal:repeat="session user/orderdSessions">
                   
-                  <img tal:condition="session/isActive"     title="Online"  alt="Online"  tal:attributes="src string:$portal_url/++resource++maxttor.sessioncontrol.resources/online.png" />
-                  <img tal:condition="not:session/isActive" title="Offline" alt="Offline" tal:attributes="src string:$portal_url/++resource++maxttor.sessioncontrol.resources/away.png" />                  
+                  <img tal:condition="session/isActive"     title="Online"  alt="Online"  tal:attributes="src string:$portal_url/++resource++maxttor.onlineusers.resources/online.png" />
+                  <img tal:condition="not:session/isActive" title="Offline" alt="Offline" tal:attributes="src string:$portal_url/++resource++maxttor.onlineusers.resources/away.png" />
                   <span style="cursor: pointer" tal:content="session/ip" title="" tal:attributes="title session/session_id">IP</span> (Updated <span tal:content="session/time_lastrefresh">time_lastrefresh</span> ago,
                    online: <span tal:content="session/time_online">time_online</span>)
 
                   &nbsp;&nbsp;[<a href=""
                      tal:define="session_id session/session_id"
-                     tal:attributes="href string:$portal_url/@@sessioncontrol?action=delete_session&session_id=$session_id"
+                     tal:attributes="href string:$portal_url/@@onlineusers?action=delete_session&session_id=$session_id"
                      i18n:translate="label_remove">Remove</a>]
                 </dd>
 
@@ -52,11 +52,11 @@
                i18n:translate="no_users_online">There is no users online at the moment.</div>
         </tal:onlinedata>
     [<a href="" 
-       tal:attributes="href string:$portal_url/@@sessioncontrol"
+       tal:attributes="href string:$portal_url/@@onlineusers"
        i18n:translate="label_refrsh">Refresh</a>]
     &nbsp;&nbsp;
     [<a href=""
-       tal:attributes="href string:$portal_url/@@sessioncontrol?action=delete_inactivesessions"
+       tal:attributes="href string:$portal_url/@@onlineusers?action=delete_inactivesessions"
        i18n:translate="label_remove_inactive">Remove Inactive</a>]
 
     </div>
