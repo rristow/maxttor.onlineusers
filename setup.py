@@ -24,7 +24,6 @@ setup(name='maxttor.sessioncontrol',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'pas.plugins.preauth==1.0',
       ],
       entry_points="""
       # -*- Entry points: -*-
