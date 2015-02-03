@@ -49,7 +49,7 @@
   <browser:viewlet
         name="sessionscontrol-call"
         manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
-        template="onlineusers-call.pt"
+        template="sessioncontrol-call.pt"
         class=".views.AjaxSessionsControlCall"
         layer="maxttor.onlineusers.interfaces.ISessionsControl"
         permission="zope.Public"

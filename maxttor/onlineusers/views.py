@@ -13,7 +13,7 @@ from zope.viewlet.interfaces import IViewlet
 
 class AjaxSessionsControlCall(BrowserView):
     implements(IViewlet)
-    render = ViewPageTemplateFile('onlineusers-call.pt')
+    render = ViewPageTemplateFile('sessioncontrol-call.pt')
 
     def __init__(self, context, request, view, manager):
         super(AjaxSessionsControlCall, self).__init__(context, request)
@@ -35,7 +35,7 @@ class AjaxSessionsControlCall(BrowserView):
 
 class OnlineTrackingView(BrowserView):
     """ list & control online users """
-    template = ViewPageTemplateFile('onlineusers.pt')
+    template = ViewPageTemplateFile('sessioncontrol.pt')
 
     def __call__(self):
         context = aq_inner(self.context)        
