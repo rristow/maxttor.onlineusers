@@ -3,13 +3,16 @@ import uuid
 from Products.CMFCore.utils import getToolByName 
 from zope.component import getUtility
 from Acquisition import aq_inner
-from zope.app.component.hooks import getSite
 from datetime import datetime, timedelta, date
 from plone.registry.interfaces import IRegistry
 from maxttor.sessioncontrol.interfaces import ISessionsControlSettings
 from maxttor.sessioncontrol.dbapi import db
 from maxttor.sessioncontrol.utils import getCookie, setCookie
 from maxttor.sessioncontrol.config import DEBUG, REMOVEINACTIVE_SECONDS
+try:
+    from zope.component.hooks import getSite
+except ImportError:
+    from zope.app.component.hooks import getSite
 import logging
 
 logger = logging.getLogger('maxttor.sessioncontorl')
