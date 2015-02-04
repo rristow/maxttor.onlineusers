@@ -12,7 +12,7 @@
    
   <genericsetup:registerProfile
       name="default"
-      title="maxttor online users"
+      title="Maxttor online users"
       directory="profiles/default"
       description="Installs the maxttor.onlineusers package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
