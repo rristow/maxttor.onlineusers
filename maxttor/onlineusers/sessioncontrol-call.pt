@@ -6,25 +6,24 @@
     condition="view/isActive">
     <script type="text/javascript"
             tal:content="string:
-
         debugmsg = function (log_txt) {
             if (typeof window.console != 'undefined') {
                 window.console.log(log_txt);
             }
         }
 
-        jq(document).ready(
-            function () {
+        (function($) {
+            $(document).ready(function(){
                 var session_ping_interval =  parseInt(${session_ping_interval})*1000;
                 var ajax_sessionscontrol = '${portal_url}/@@sessionscontrol_online';
-                
-                // send an online signal 
+
+                // send an online signal
                 function sessionscontrol_online () {
                     // ---- session is online -----------
-                    jq.ajax({
+                   $.ajax({
                         url: ajax_sessionscontrol,
                         type: 'POST',
-                        dataType: 'json',     
+                        dataType: 'json',
                         timeout: 5000,
                         error: function(){
                             debugmsg('ERROR: sessionscontrol_online view is not accessible');
@@ -53,8 +52,8 @@
                 sessionscontrol_online();
                 // session control call (timer)
                 debugmsg('starting session control. Interval:'+String(session_ping_interval));
-            }
-        );
+            });
+        })(jQuery);
 ">
-     </script>
+    </script>
 </tal:tracking>
