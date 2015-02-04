@@ -6,21 +6,21 @@
     condition="view/isActive">
     <script type="text/javascript"
             tal:content="string:
-        debugmsg = function (log_txt) {
+            debugmsg = function (log_txt) {
             if (typeof window.console != 'undefined') {
                 window.console.log(log_txt);
             }
         }
 
-        (function($) {
-            $(document).ready(function(){
+        (function(jq) {
+            jq(document).ready(function(){
                 var session_ping_interval =  parseInt(${session_ping_interval})*1000;
                 var ajax_sessionscontrol = '${portal_url}/@@sessionscontrol_online';
 
                 // send an online signal
                 function sessionscontrol_online () {
                     // ---- session is online -----------
-                   $.ajax({
+                   jq.ajax({
                         url: ajax_sessionscontrol,
                         type: 'POST',
                         dataType: 'json',
